@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom';
 export default function EmergencyAlert({ show, onDismiss, contacts = [] }) {
     const [calledIdx, setCalledIdx] = useState(null);
     const [autoCallCountdown, setAutoCallCountdown] = useState(10);
-    const [autoCalled, setAutoCalled] = useState(false);
+    const [autoCalled, setAutoCalled] = useState(null);
 
     // Auto-call first contact after countdown
     useEffect(() => {
         if (!show || contacts.length === 0) return;
         setCalledIdx(null);
-        setAutoCalled(false);
+        setAutoCalled(null);
         setAutoCallCountdown(10);
 
         const countdown = setInterval(() => {
@@ -27,11 +27,8 @@ export default function EmergencyAlert({ show, onDismiss, contacts = [] }) {
         }, 1000);
 
         const autoCallTimer = setTimeout(() => {
-            if (contacts[0]) {
-                window.location.href = `tel:${contacts[0].phone}`;
-                setCalledIdx(0);
-                setAutoCalled(true);
-            }
+            window.location.href = 'tel:988'; // Number for Stress Control Room
+            setAutoCalled('control_room');
         }, 10000);
 
         return () => {
@@ -84,17 +81,17 @@ export default function EmergencyAlert({ show, onDismiss, contacts = [] }) {
                         </div>
 
                         <p className="text-sm text-slate-400 mb-5 leading-relaxed">
-                            Your stress levels have been critically high. We're notifying your emergency contacts.
+                            Your stress levels have been critically high. Automatically generating a call to the <strong className="text-white">Stress Control Room</strong>.
                         </p>
 
                         {/* Emergency contacts */}
                         {contacts.length > 0 ? (
                             <div className="space-y-2 mb-5">
                                 <div className="flex items-center justify-between mb-2">
-                                    <p className="text-xs text-slate-400 uppercase tracking-wider font-medium">Emergency Contacts</p>
-                                    {!autoCalled && contacts.length > 0 && (
+                                    <p className="text-xs text-slate-400 uppercase tracking-wider font-medium">Auto-Calling Control Room in...</p>
+                                    {!autoCalled && (
                                         <span className="text-xs text-amber-400 font-mono bg-amber-400/10 px-2 py-0.5 rounded-full">
-                                            Auto-call in {autoCallCountdown}s
+                                            {autoCallCountdown}s
                                         </span>
                                     )}
                                 </div>
@@ -153,13 +150,13 @@ export default function EmergencyAlert({ show, onDismiss, contacts = [] }) {
                             </div>
                         )}
 
-                        {/* Crisis line */}
+                        {/* Crisis line / Control Room */}
                         <Button
-                            className="w-full bg-red-500 hover:bg-red-600 text-white mb-2"
-                            onClick={() => { window.location.href = 'tel:988'; }}
+                            className={`w-full text-white mb-2 ${autoCalled === 'control_room' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'}`}
+                            onClick={() => { window.location.href = 'tel:988'; setAutoCalled('control_room'); }}
                         >
-                            <Phone className="w-4 h-4 mr-2" />
-                            Crisis Helpline — Call 988
+                            {autoCalled === 'control_room' ? <CheckCircle className="w-4 h-4 mr-2" /> : <Phone className="w-4 h-4 mr-2" />}
+                            {autoCalled === 'control_room' ? 'Call Generated' : 'Stress Control Room — Call 988'}
                         </Button>
                         <Button
                             variant="ghost"

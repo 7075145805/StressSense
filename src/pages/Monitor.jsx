@@ -13,6 +13,7 @@ import FeatureBar from '../components/stress/FeatureBar';
 import MonitorControls from '../components/stress/MonitorControls';
 import EmergencyAlert from '../components/stress/EmergencyAlert';
 import StressMessage from '../components/stress/StressMessage';
+import LiveLocationMap from '../components/stress/LiveLocationMap';
 
 const COLLECT_INTERVAL = 5000; // 5 seconds
 
@@ -71,6 +72,33 @@ export default function Monitor() {
 
         // Check for high stress alert
         if (result.stress_level === 'high') {
+            // Trigger haptic vibration (if supported)
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]);
+            }
+
+            // Play a short alert ringtone
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    const ctx = new AudioContext();
+                    if (ctx.state === 'suspended') ctx.resume();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(880, ctx.currentTime);
+                    osc.frequency.setValueAtTime(1320, ctx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.5);
+                }
+            } catch (e) {
+                console.error("Audio playback failed", e);
+            }
+
             setHighStressCount(prev => {
                 const next = prev + 1;
                 if (next >= 3) setShowAlert(true);
@@ -201,6 +229,12 @@ export default function Monitor() {
                     <p className="text-xs text-slate-400 uppercase tracking-wider font-medium mb-3">Live Sensor Data</p>
                     <SensorDisplay data={sensorData} />
                 </motion.div>
+
+                {/* Live Location Map */}
+                <LiveLocationMap 
+                    lat={sensorData.gps_latitude} 
+                    lng={sensorData.gps_longitude} 
+                />
 
                 {/* Info */}
                 <div className="text-center pb-8">
