@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 **Welcome to your Base44 project** 
 
 **About**
@@ -37,3 +38,7 @@ Open [Base44.com](http://Base44.com) and click on Publish.
 Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
 
 Support: [https://app.base44.com/support](https://app.base44.com/support)
+=======
+# StressSense
+StressSense is a sleek, real-time brain performance monitoring platform that tracks cognitive metrics, neural activity patterns, and mental wellness data. Visualize your mind's health through stunning dashboards, live pulse readings, and AI-driven insights — empowering you to optimize focus, reduce stress, and unlock peak mental performance.
+>>>>>>> 0d8dcdef0b89543514f609830147934dd83209c6
