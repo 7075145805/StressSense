@@ -1,0 +1,48 @@
+{
+    "name": "StressResult",
+    "type": "object",
+    "properties": {
+        "session_id": {
+            "type": "string"
+        },
+        "timestamp": {
+            "type": "number"
+        },
+        "stress_level": {
+            "type": "string",
+            "enum": [
+                "low",
+                "medium",
+                "high"
+            ],
+            "description": "Classified stress level"
+        },
+        "stress_score": {
+            "type": "number",
+            "description": "Numeric stress score 0-100"
+        },
+        "movement_intensity": {
+            "type": "number"
+        },
+        "shake_frequency": {
+            "type": "number"
+        },
+        "heart_rate": {
+            "type": "number"
+        },
+        "screen_duration": {
+            "type": "number"
+        },
+        "orientation_changes": {
+            "type": "number"
+        },
+        "location_delta": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "session_id",
+        "stress_level",
+        "stress_score"
+    ]
+}

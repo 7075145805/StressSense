@@ -1,0 +1,23 @@
+{
+    "name": "EmergencyContact",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "phone": {
+            "type": "string"
+        },
+        "relationship": {
+            "type": "string"
+        },
+        "priority": {
+            "type": "number",
+            "description": "1 = first to call"
+        }
+    },
+    "required": [
+        "name",
+        "phone"
+    ]
+}

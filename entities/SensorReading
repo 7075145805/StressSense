@@ -1,0 +1,61 @@
+{
+    "name": "SensorReading",
+    "type": "object",
+    "properties": {
+        "session_id": {
+            "type": "string",
+            "description": "Monitoring session identifier"
+        },
+        "timestamp": {
+            "type": "number",
+            "description": "Unix timestamp of reading"
+        },
+        "accelerometer_x": {
+            "type": "number"
+        },
+        "accelerometer_y": {
+            "type": "number"
+        },
+        "accelerometer_z": {
+            "type": "number"
+        },
+        "gyroscope_alpha": {
+            "type": "number"
+        },
+        "gyroscope_beta": {
+            "type": "number"
+        },
+        "gyroscope_gamma": {
+            "type": "number"
+        },
+        "gps_latitude": {
+            "type": "number"
+        },
+        "gps_longitude": {
+            "type": "number"
+        },
+        "heart_rate": {
+            "type": "number"
+        },
+        "screen_on_duration": {
+            "type": "number",
+            "description": "Screen usage in seconds"
+        },
+        "movement_intensity": {
+            "type": "number"
+        },
+        "shake_frequency": {
+            "type": "number"
+        },
+        "orientation_changes": {
+            "type": "number"
+        },
+        "location_delta": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "session_id",
+        "timestamp"
+    ]
+}
